@@ -19,7 +19,7 @@ public class JsonIngestionSchemaManipulationApp {
   /**
    * main() is your entry point to the application.
    * 
-   * @param args
+   * @param args Command line arguments
    */
   public static void main(String[] args) {
     JsonIngestionSchemaManipulationApp app =
@@ -42,9 +42,12 @@ public class JsonIngestionSchemaManipulationApp {
     // in a dataframe
     Dataset<Row> df = spark.read().format("json")
         .load("data/Restaurants_in_Durham_County_NC.json");
+
     System.out.println("*** Right after ingestion");
+
     df.show(5);
     df.printSchema();
+
     System.out.println("We have " + df.count() + " records.");
 
     df = df.withColumn("county", lit("Durham"))
@@ -61,23 +64,32 @@ public class JsonIngestionSchemaManipulationApp {
         .withColumn("type",
             split(df.col("fields.type_description"), " - ").getItem(1))
         .withColumn("geoX", df.col("fields.geolocation").getItem(0))
-        .withColumn("geoY", df.col("fields.geolocation").getItem(1));
+        .withColumn("geoY", df.col("fields.geolocation").getItem(1))
+        .drop(df.col("fields"))
+        .drop(df.col("geometry"))
+        .drop(df.col("record_timestamp"))
+        .drop(df.col("recordid"));
+
     df = df.withColumn("id",
         concat(df.col("state"), lit("_"),
             df.col("county"), lit("_"),
             df.col("datasetId")));
 
     System.out.println("*** Dataframe transformed");
+
     df.show(5);
     df.printSchema();
 
     System.out.println("*** Looking at partitions");
+
     Partition[] partitions = df.rdd().partitions();
     int partitionCount = partitions.length;
+
     System.out.println("Partition count before repartition: " +
         partitionCount);
 
     df = df.repartition(4);
+
     System.out.println("Partition count after repartition: " +
         df.rdd().partitions().length);
   }

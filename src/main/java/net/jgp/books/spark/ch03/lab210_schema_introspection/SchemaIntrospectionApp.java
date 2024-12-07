@@ -18,7 +18,7 @@ public class SchemaIntrospectionApp {
   /**
    * main() is your entry point to the application.
    * 
-   * @param args
+   * @param args Command line arguments passed to the application.
    */
   public static void main(String[] args) {
     SchemaIntrospectionApp app = new SchemaIntrospectionApp();

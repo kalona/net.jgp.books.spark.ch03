@@ -15,16 +15,17 @@ import org.apache.spark.sql.SparkSession;
  */
 public class IngestionSchemaManipulationApp {
 
-  /**
-   * main() is your entry point to the application.
-   * 
-   * @param args
-   */
-  public static void main(String[] args) {
-    IngestionSchemaManipulationApp app =
-        new IngestionSchemaManipulationApp();
-    app.start();
-  }
+    /**
+     * main() is the entry point to the application.
+     * This method initializes and starts the application.
+     *
+     * @param args Command line arguments for the application.
+     */
+    public static void main(String[] args) {
+        IngestionSchemaManipulationApp app = new IngestionSchemaManipulationApp();
+        app.start();
+    }
+
 
   /**
    * The processing code.
@@ -40,8 +41,10 @@ public class IngestionSchemaManipulationApp {
     // Restaurants_in_Wake_County_NC.csv,
     // stores it in a dataframe
     Dataset<Row> df = spark.read().format("csv")
-        .option("header", "true")
-        .load("data/Restaurants_in_Wake_County_NC.csv");
+            .option("header", "true")
+//            .option("inferSchema", "true")
+            .load("data/Restaurants_in_Wake_County_NC.csv");
+
     System.out.println("*** Right after ingestion");
     df.show(5);
     df.printSchema();
@@ -83,7 +86,7 @@ public class IngestionSchemaManipulationApp {
         .drop("geoY")
         .drop("address1")
         .drop("datasetId");
-    dfUsedForBook.show(5, 15);
+//    dfUsedForBook.show(5, 15);
     // end
 
     df.printSchema();

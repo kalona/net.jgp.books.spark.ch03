@@ -20,7 +20,7 @@ public class DataframeUnionApp {
   /**
    * main() is your entry point to the application.
    * 
-   * @param args
+   * @param args Command line params
    */
   public static void main(String[] args) {
     DataframeUnionApp app =
