@@ -42,8 +42,9 @@ public class SchemaIntrospectionApp {
     // Reads a CSV file with header, called books.csv, stores it in a
     // dataframe
     Dataset<Row> df = spark.read().format("csv")
-        .option("header", "true")
-        .load("data/Restaurants_in_Wake_County_NC.csv");
+            .option("header", "true")
+            .option("inferSchema", "true")
+            .load("data/Restaurants_in_Wake_County_NC.csv");
 
     // Let's transform our dataframe
     df = df.withColumn("county", lit("Wake"))
@@ -59,11 +60,17 @@ public class SchemaIntrospectionApp {
         .withColumnRenamed("FACILITYTYPE", "type")
         .withColumnRenamed("X", "geoX")
         .withColumnRenamed("Y", "geoY");
+
+    // Creates a new column "id" as a concatenation of state, county
+    // and datasetId
     df = df.withColumn("id", concat(
         df.col("state"),
         lit("_"),
         df.col("county"), lit("_"),
         df.col("datasetId")));
+
+    System.out.println("*** Sample rows:");
+    df.show(5);
 
     // NEW
     ////////////////////////////////////////////////////////////////////

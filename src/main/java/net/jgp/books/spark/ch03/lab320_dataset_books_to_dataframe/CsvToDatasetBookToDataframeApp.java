@@ -56,7 +56,7 @@ public class CsvToDatasetBookToDataframeApp implements Serializable {
   /**
    * It starts here
    * 
-   * @param args
+   * @param args none
    */
   public static void main(String[] args) {
     CsvToDatasetBookToDataframeApp app =
@@ -110,7 +110,8 @@ public class CsvToDatasetBookToDataframeApp implements Serializable {
             to_date(df2.col("releaseDateAsString"), "yyyy-MM-dd"))
         .drop("releaseDateAsString");
     System.out.println("*** Books are back in a dataframe");
-    df2.show(5, 13);
+//    df2.show(5, 13);
+    df2.show(5);
     df2.printSchema();
   }
 }

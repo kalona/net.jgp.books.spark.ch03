@@ -41,7 +41,9 @@ public class JsonIngestionSchemaManipulationApp {
     // it
     // in a dataframe
     Dataset<Row> df = spark.read().format("json")
-        .load("data/Restaurants_in_Durham_County_NC.json");
+//            .option("multiline", "true")
+//            .option("inferSchema", "true")
+            .load("data/Restaurants_in_Durham_County_NC.json");
 
     System.out.println("*** Right after ingestion");
 

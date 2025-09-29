@@ -11,12 +11,17 @@ from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 
 
+import os
+
 def get_absolute_file_path(path, filename):
-    # To get absolute path for a given filename
-    current_dir = os.path.dirname(__file__)
+    try:
+        current_dir = os.path.dirname(__file__)
+    except NameError:
+        current_dir = os.getcwd()
     relative_path = "{}{}".format(path, filename)
     absolute_file_path = os.path.join(current_dir, relative_path)
     return absolute_file_path
+
 
 
 def main():

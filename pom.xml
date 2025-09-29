@@ -11,8 +11,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>11</java.version>
-    <scala.version>2.12</scala.version>
-    <spark.version>3.1.2</spark.version>
+    <scala.version>2.13</scala.version>
+    <spark.version>3.5.3</spark.version>
     <junit.version>4.13.1</junit.version>
     <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
   </properties>
@@ -59,6 +59,13 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>2.15.2</version>
+    </dependency>
+
   </dependencies>
 
   <!-- Build -->
